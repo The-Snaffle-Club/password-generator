@@ -1,0 +1,29 @@
+{
+    "name": "destination/password-generator",
+    "description": "XKCD Style Password Generator",
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Destination\\PasswordGenerator\\": "src"
+        }
+    },
+    "bin": [
+        "bin/passgen"
+    ],
+    "authors": [
+        {
+            "name": "Andy Palmer",
+            "email": "andy.palmer@wearedestination.com"
+        }
+    ],
+    "autoload-dev": {
+        "psr-4": {
+            "Destination\\PasswordGenerator\\Tests\\": "tests"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}

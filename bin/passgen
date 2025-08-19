@@ -1,0 +1,57 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Generate a single password: ./bin/passgen
+ * Generate multiple passwords: ./bin/passgen <number-of-passwords>
+ * Prompt to regenerate passwords: ./bin/passgen --confirm
+ */
+
+$autoloaders = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php'
+];
+
+
+foreach ($autoloaders as $file) {
+    if (file_exists($file)) {
+        require_once $file;
+
+        break;
+    }
+}
+
+$generator = new Destination\PasswordGenerator\PasswordGenerator();
+
+$options = getopt('ch', ['confirm', 'help'], $optInd);
+
+if (isset($options['h']) || isset($options['help'])) {
+    echo <<<EOL
+Usage: $argv[0] [number-of-passwords]
+
+Options:
+
+-c, --confirm   Displays a prompt asking whether to regenerate the password(s)
+-h, --help      Displays this help message
+
+EOL;
+    exit;
+}
+
+$args = array_slice($argv, $optInd);
+
+$numPasswords = $args[0] ?? 1;
+$confirm      = isset($options['c']) || isset($options['confirm']);
+$confirmed    = false;
+
+do {
+    for ($i = 0; $i < $numPasswords; $i++) {
+        echo $generator->generate() . PHP_EOL;
+    }
+
+    if ($confirm) {
+        echo PHP_EOL;
+        $confirmed = strtolower(readline("Regenerate? [y/N]: ")) !== 'y';
+        echo PHP_EOL;
+    }
+} while ($confirm && !$confirmed);
