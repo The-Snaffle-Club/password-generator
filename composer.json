@@ -1,5 +1,5 @@
 {
-    "name": "destination/password-generator",
+    "name": "the-snaffle-club/password-generator",
     "description": "XKCD Style Password Generator",
     "require": {
         "php": ">=7.4"
